@@ -19,4 +19,9 @@ public class ServiceResponse {
     public void setProcessingTime(long l) {
         processingTime = l;
     }
+
+    public long getProcessingTime(){
+        return processingTime;
+    }
+
 }

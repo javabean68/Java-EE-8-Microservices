@@ -2,6 +2,7 @@ package com.packtpub.microservices.openliberty;
 
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,12 +21,12 @@ public class ForecastResource {
 
     @PostConstruct
     public void initWebTargets() {
-        locationTarget = ClientBuilder.newClient().target(BASE_URI).path("location");
+        //locationTarget = ClientBuilder.newClient().target(BASE_URI).path("location");
         temperatureTarget = ClientBuilder.newClient().target(BASE_URI).path("temperature/{city}");
     }
 
-    //@Uri("location")
-    private WebTarget locationTarget;
+    @Inject
+    public WebTargetProducer producer;
 
     //@Uri("temperature/{city}")
     private WebTarget temperatureTarget;
@@ -36,7 +37,7 @@ public class ForecastResource {
         long startTime = System.currentTimeMillis();
         ServiceResponse response = new ServiceResponse();
 
-        List<Location> locations = locationTarget.request()
+        List<Location> locations = producer.produceLocationWebTarget().request()
                 .get(new GenericType<List<Location>>() {});
 
         locations.forEach(location -> {

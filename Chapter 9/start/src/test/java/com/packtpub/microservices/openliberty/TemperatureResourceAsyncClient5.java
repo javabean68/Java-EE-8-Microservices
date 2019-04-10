@@ -31,7 +31,11 @@ public class TemperatureResourceAsyncClient5 {
             serviceResponse.getForecasts().stream().forEach(f -> {
                 System.out.print(f.getLocation().getName());
                 System.out.println( ": " + f.getTemperature().getTemperature() + " " + f.getTemperature().getTemperatureScale());
+
+
             });
+
+            System.out.println("Elapsed time : " + serviceResponse.getProcessingTime());
         });
 
         new Thread(() -> {
